@@ -1,0 +1,14 @@
+{
+  "plugin_version": "0.1.0",
+  "assessed_requirements_commit": "60ea4db827457b4a4a7b11d79e86b654612a75e1",
+  "protocol_tests": 129,
+  "files_sha256": {
+    "Client.php": "cf063faae64660531e1bbd22ac8700060d1fbe5367dd8f58298fe9afb25c1aab",
+    "Failure.php": "a0e73b9b39d9ebb1d7e3cbe14834f7673393d6f3b392757c2917b9ae661d8ebb",
+    "Http.php": "3f3d32deefdd167cc204ffda27efdd21a2109df67b482fec53dce2248aed8628",
+    "HttpInterface.php": "b58852812bcb289e14b5e7e299ec0f54446f750672f16022ff70c98ffec051cd",
+    "Json.php": "ff09e83d89f14458b4b5674d640432280b27c0c42bc27c35c29f82d3a529ea1a",
+    "Keys.php": "b0eab60cdf95a204786eab8a703e1fc0512c050e61938af63a80dd025e7c1292",
+    "Policy.php": "f45f4190294e4eaedbf411dc94b8009e0dd16c36467ba58ff54814e6efe24b6c"
+  }
+}

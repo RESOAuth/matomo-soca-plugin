@@ -1,0 +1,20 @@
+{
+  "origin": "https://app.example.com",
+  "client_name": "Example analytics",
+  "issuer": "https://auth.resoauth.cloud",
+  "enabled": false,
+  "private_key_file": "/run/secrets/soca-client.pem",
+  "state_key_file": "/run/secrets/soca-state.key",
+  "metadata_mode": "hosted",
+  "proxy_template": "https://dynamic-cimd.resoauth.cloud/cimd/%s",
+  "allowed_domains": [
+    "example.com"
+  ],
+  "allowed_emails": [],
+  "denied_domains": [],
+  "denied_emails": [],
+  "provision": false,
+  "group_id": "view",
+  "site_id": "1",
+  "session_max_age": 900
+}

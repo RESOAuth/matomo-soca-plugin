@@ -1,0 +1,9 @@
+{% extends 'admin.twig' %}
+{% block content %}
+<h1>SOCA sign-in</h1>
+<p>All settings are locked to the deployment JSON referenced by SOCA_CONFIG_FILE. Private keys and state encryption keys stay in deployment secret files.</p>
+<p>{{ message }}</p><pre aria-label="Effective configuration and candidate evidence">{{ status }}</pre>
+<form method="post"><input type="hidden" name="nonce" value="{{ socaNonce }}"/><input type="hidden" name="operation" value="check"/><button type="submit" class="btn">Check public documents</button></form>
+<form method="post"><input type="hidden" name="nonce" value="{{ socaNonce }}"/><input type="hidden" name="operation" value="test"/><button type="submit" class="btn">Test candidate sign-in</button></form>
+<p>Tests do not create, link or modify users and preserve your local administrator session. Local password sign-in remains available. Set SOCA_EMERGENCY_DISABLE=1 and restart PHP workers for emergency recovery.</p>
+{% endblock %}

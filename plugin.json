@@ -1,0 +1,24 @@
+{
+  "name": "Soca",
+  "version": "0.1.0",
+  "description": "SOCA OpenID Connect and CIMD sign-in with PKCE and explicit identity links.",
+  "theme": false,
+  "require": {
+    "matomo": ">=5.0.0,<6.0.0",
+    "php": ">=8.3.0"
+  },
+  "license": "AGPL v3",
+  "homepage": "https://github.com/RESOAuth/matomo-soca-plugin",
+  "authors": [
+    {
+      "name": "RESOAuth",
+      "homepage": "https://resoauth.org"
+    }
+  ],
+  "keywords": [
+    "authentication",
+    "openid",
+    "cimd",
+    "soca"
+  ]
+}
