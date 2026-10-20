@@ -8,7 +8,7 @@ use Piwik\Session\SessionInitializer;
 use Piwik\Url;
 use RuntimeException;
 
-final class Controller extends \Piwik\Plugin\Controller
+final class Controller extends \Piwik\Plugin\ControllerAdmin
 {
     public function metadata(): string { return $this->json((new Service())->client()->metadata(), true); }
     public function jwks(): string { return $this->json((new Service())->client()->jwks(), true); }
