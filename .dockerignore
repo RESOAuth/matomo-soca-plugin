@@ -1,0 +1,10 @@
+.git
+vendor
+build
+demo/secrets
+demo/data
+demo/project/vendor
+demo/project/config
+demo/project/var
+demo/project/public
+*.log

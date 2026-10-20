@@ -1,0 +1,6 @@
+/vendor/
+/build/
+/demo/secrets/
+/demo/data/
+.phpunit.cache/
+*.log

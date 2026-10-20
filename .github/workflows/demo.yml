@@ -1,0 +1,37 @@
+name: Native host demo
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  host:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      CONTAINER_ENGINE: docker
+      SOCA_DEMO_NAME: soca-matomo-ci
+      SOCA_DEMO_SECRETS: /tmp/soca-matomo-${{ github.run_id }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Build and install disposable native host
+        run: demo/run.sh
+      - name: Wait for native host
+        run: |
+          for attempt in {1..90}; do
+            if docker exec -u www-data "$SOCA_DEMO_NAME" php console soca:manage status >/dev/null 2>&1; then exit 0; fi
+            sleep 1
+          done
+          docker logs "$SOCA_DEMO_NAME" --tail 30
+          exit 1
+      - name: Exercise native account and replay APIs
+        run: docker exec -u www-data -e SOCA_NATIVE_TESTS=1 "$SOCA_DEMO_NAME" php plugins/Soca/tests/native.php
+      - name: Verify HTTPS public documents, denial and recovery
+        run: python3 demo/smoke.py matomo
+      - name: Clean up disposable containers
+        if: always()
+        run: |
+          docker rm -f "$SOCA_DEMO_NAME" || true
+          docker rm -f "$SOCA_DEMO_NAME-db" || true
+          docker network rm "$SOCA_DEMO_NAME-net" || true
