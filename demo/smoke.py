@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Check the disposable host over HTTPS with its explicitly trusted local certificate."""
-import http.client, json, os, socket, ssl, sys
+import base64, http.client, json, os, socket, ssl, sys
 from pathlib import Path
 from urllib.parse import urlsplit
 product = sys.argv[1]
@@ -20,7 +20,16 @@ def get(path):
     response=connection.getresponse(); body=response.read(524288); code=response.status; headers=dict(response.getheaders());connection.close()
     return code,headers,body
 code,headers,body=get(paths[0]);assert code==200,(product,'metadata',code)
-metadata=json.loads(body);assert metadata['client_id']==origin+paths[0];assert metadata['token_endpoint_auth_method']=='private_key_jwt';assert metadata['token_endpoint_auth_signing_alg']=='ES256';assert metadata['id_token_signed_response_alg']=='ES256'
+metadata=json.loads(body)
+if config.get('metadata_mode','hosted')=='proxy':
+    public={key:value for key,value in metadata.items() if key!='client_id'}
+    payload=json.dumps(public,sort_keys=True,ensure_ascii=False,separators=(',',':')).encode('utf-8')
+    encoded=base64.urlsafe_b64encode(payload).decode('ascii').rstrip('=')
+    expected=config.get('proxy_template','https://dynamic-cimd.resoauth.cloud/cimd/%s').replace('%s',encoded)
+else:
+    expected=origin+paths[0]
+assert metadata['client_id']==expected
+assert metadata['token_endpoint_auth_method']=='private_key_jwt';assert metadata['token_endpoint_auth_signing_alg']=='ES256';assert metadata['id_token_signed_response_alg']=='ES256'
 code,headers,body=get(paths[1]);assert code==200,(product,'jwks',code)
 keys=json.loads(body)['keys'];assert keys and keys[0]['crv']=='P-256' and 'd' not in keys[0]
 code,headers,body=get(paths[2]);assert code==403,(product,'disabled login',code)
