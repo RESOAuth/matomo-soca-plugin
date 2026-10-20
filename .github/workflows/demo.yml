@@ -1,6 +1,7 @@
 name: Native host demo
 on:
   push:
+    branches: [main]
   pull_request:
 permissions:
   contents: read
@@ -11,7 +12,7 @@ jobs:
     env:
       CONTAINER_ENGINE: docker
       SOCA_DEMO_NAME: soca-matomo-ci
-      SOCA_DEMO_SECRETS: ${{ runner.temp }}/soca-matomo-secrets
+      SOCA_DEMO_SECRETS: /tmp/soca-matomo-${{ github.run_id }}
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
       - name: Build and install disposable native host
